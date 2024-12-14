@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Corruption Reporting App</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/styles.css"> 
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            background-color: #f8f9fa; 
+        }
+        header {
+    position: fixed;
+    top: 0; 
+    left: 0; 
+    right: 0; 
+    height: 150px; 
+    width: 100%; 
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2); 
+    background-color: #007bff; 
+    z-index: 1000; 
+}
+
+body {
+    padding-top: 220px; /* Adjust padding to prevent content overlap */
+}
+
+.logo {
+    height: 50px; /* Ensure logo is appropriately sized */
+}
+
+
+.logo {
+    height: 50px; /* Ensure logo is appropriately sized */
+}
+
+h1.display-4 {
+    font-size: 2.5rem; /* Increase the font size for the main title */
+}
+
+.nav {
+    background-color: #343a40; /* Dark background for the nav */
+    padding: 10px 0; /* Space around the nav items */
+}
+
+.nav-link {
+    color: white; /* Default text color */
+    transition: background-color 0.3s, color 0.3s; /* Smooth transition for hover effects */
+}
+
+.nav-link:hover {
+    background-color: #495057; /* Background color on hover */
+    color: #ffffff; /* Text color on hover */
+}
+
+.nav-link i {
+    margin-right: 8px; /* Space between icon and text */
+}
+
+
+        .hero {
+            background: url('https://via.placeholder.com/1200x400') no-repeat center center/cover;
+            color: white;
+            padding: 60px 0;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        .cta-button {
+            margin-top: 20px;
+        }
+        footer {
+            background-color: #343a40; /* Black footer */
+            color: white; /* White text in footer */
+            text-align: center;
+            padding: 15px 0;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+        .banner {
+            width: 100%;
+            height: auto;
+        }
+        .logo {
+            height: 50px;
+        }
+        h2, h3 {
+            text-transform: uppercase;
+            font-size: 2em; 
+            font-weight: bold;
+        }
+        h4,h5,h6{
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+        @media (max-width: 768px) {
+            .hero h2 {
+                font-size: 1.8em; /* Adjust font size for smaller screens */
+            }
+            .hero p {
+                font-size: 1.2em; /* Adjust paragraph font size */
+            }
+            .cta-button {
+                font-size: 1.2em; /* Larger button text */
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="bg-primary text-white text-center py-4">
+        <img src="/logo2.jpeg" alt="Logo" class="logo"> 
+        <h1>Crime Reporting App</h1>
+        <nav>
+            <ul class="nav justify-content-center">
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="/"><i class="fas fa-home"></i> Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="/about"><i class="fas fa-info-circle"></i> About Us</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="/contact"><i class="fas fa-envelope"></i> Contact</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="/report"><i class="fas fa-exclamation-circle"></i> Report Crime</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="/register"><i class="fas fa-user-plus"></i> Register</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="/login"><i class="fas fa-user"></i> User Login</a>
+                </li>
+            </ul>
+        </nav>
+        
+    </header>
+
+    <img src="https://via.placeholder.com/1200x200/ffcc00/000000?text=Together+Against+Corruption" alt="Online Banner" class="banner">
+
+    <div class="hero text-center">
+        <h2>Welcome to the Crime Reporting Center</h2>
+        <p>Your voice matters. Help us combat crime in our community by reporting cases anonymously.</p>
+        <a href="/report" class="btn btn-success btn-lg cta-button">Report Now</a>
+    </div>
+
+    <main class="container my-5">
+        <h3>How It Works</h3>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h5 class="card-title">1. Report Anonymously</h5>
+                        <p class="card-text">Submit your report without revealing your identity. Your privacy is our priority.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h5 class="card-title">2. Track Your Report</h5>
+                        <p class="card-text">Stay updated on the status of your report. We will keep you informed throughout the process.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h5 class="card-title">3. Join the Fight</h5>
+                        <p class="card-text">Be a part of a community striving for transparency and integrity in governance.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-dark text-center py-3">
+        <p>&copy; 2024 Crime Reporting App</p>
+    </footer>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

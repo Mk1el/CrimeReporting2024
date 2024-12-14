@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Registration</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"> <!-- Added Font Awesome -->
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            background-color: #f8f9fa;
+        }
+        header {
+            background-color: #007bff;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+        }
+        nav ul {
+            list-style: none;
+            padding: 0;
+            text-align: center;
+        }
+        nav ul li {
+            display: inline;
+            margin: 0 15px;
+        }
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-size: 1.1rem;
+        }
+        nav ul li a i { 
+            margin-right: 8px; /* Space between icon and text */
+        }
+        main {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background: white;
+            border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            color: #007bff;
+        }
+        footer {
+            text-align: center;
+            padding: 15px 0;
+            background-color: #007bff;
+            color: white;
+        }
+        .cta-button {
+            background-color: #28a745;
+            color: white;
+            padding: 10px 15px;
+            text-decoration: none;
+            border-radius: 5px;
+            display: inline-block;
+            margin-top: 20px;
+        }
+        .cta-button:hover {
+            background-color: #218838;
+        }
+
+        /* Custom Form Styles */
+        .form-container {
+            max-width: 600px;
+            margin: 30px auto;
+            padding: 30px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-group label {
+            font-size: 1.1rem;
+        }
+
+        .form-group input {
+            padding: 12px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            font-size: 1rem;
+            width: 100%;
+        }
+
+        .form-group input:focus {
+            border-color: #007bff;
+            outline: none;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            border: none;
+            padding: 12px 20px;
+            font-size: 1rem;
+            width: 100%;
+            border-radius: 5px;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+
+        .footer-text {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .footer-text a {
+            color: #007bff;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Section -->
+    <header>
+        <h1>User Registration</h1>
+        <nav>
+            <ul>
+                <li><a href="/"><i class="fas fa-home"></i>Home</a></li>
+                <li><a href="/about"><i class="fas fa-info-circle"></i>About Us</a></li>
+                <li><a href="/contact"><i class="fas fa-envelope"></i>Contact</a></li>
+                <li><a href="/report"><i class="fas fa-bullhorn"></i>Report Crime</a></li>
+                <li><a href="/login"><i class="fas fa-sign-in-alt"></i>Login</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Main Content Section -->
+    <main>
+        <div class="form-container">
+            <h2>Create Your Account</h2>
+            <form id="registerForm">
+                <!-- Username Field -->
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" name="username" placeholder="Enter Username" required>
+                    <p class="error"></p>
+                </div>
+
+                <!-- Email Field -->
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" placeholder="Enter Email" required>
+                    <p class="error"></p>
+                </div>
+
+                <!-- Password Field -->
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" placeholder="Enter Password" required>
+                    <p class="error"></p>
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit" class="btn btn-primary">Register</button>
+            </form>
+
+            <!-- Footer Text -->
+            <div class="footer-text">
+                <p>Already have an account? <a href="/login">Login</a></p>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer Section -->
+    <footer>
+        <p>&copy; 2024 Corruption Reporting App</p>
+    </footer>
+
+    <!-- JavaScript Validation -->
+    <script>
+        const form = document.getElementById('registerForm');
+const username = document.getElementById('username');
+const email = document.getElementById('email');
+const password = document.getElementById('password');
+
+form.addEventListener('submit', (e) => {
+    e.preventDefault(); // Prevent form from submitting the default way
+    validateForm();
+});
+
+function validateForm() {
+    let isFormValid = true;
+
+    // Validate Username
+    if (username.value.trim() === '') {
+        setError(username, 'Username cannot be empty');
+        isFormValid = false;
+    } else if (!isValidUsername(username.value.trim())) {
+        setError(username, 'Username is not valid!');
+        isFormValid = false;
+    } else {
+        setSuccess(username);
+    }
+
+    // Validate Email
+    if (email.value.trim() === '') {
+        setError(email, 'Email cannot be empty');
+        isFormValid = false;
+    } else if (!isValidEmail(email.value.trim())) {
+        setError(email, 'Email is not valid');
+        isFormValid = false;
+    } else {
+        setSuccess(email);
+    }
+
+    // Validate Password
+    if (password.value.trim() === '') {
+        setError(password, 'Password cannot be empty');
+        isFormValid = false;
+    } else if (password.value.trim().length < 6 || password.value.trim().length > 10) {
+        setError(password, 'Password must be between 6 and 10 characters!');
+        isFormValid = false;
+    } else if (!isValidPassword(password.value.trim())) {
+        setError(password, 'Password must include at least one uppercase letter, one lowercase letter, and one number.');
+        isFormValid = false;
+    } else {
+        setSuccess(password);
+    }
+
+    // If form is valid, send the data to the server
+    if (isFormValid) {
+        const userData = {
+            username: username.value.trim(),
+            email: email.value.trim(),
+            password: password.value.trim()
+        };
+
+        // Send a POST request to register the user
+        fetch('/register', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(userData) // Send form data as JSON
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert('Registration successful!');
+                form.reset(); // Reset the form on success
+            } else {
+                alert('Error: ' + data.error);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Something went wrong, please try again later!');
+        });
+    }
+}
+
+function setError(element, errorMessage) {
+    const parent = element.parentElement;
+    const errorElement = parent.querySelector('.error');
+    errorElement.textContent = errorMessage;
+    parent.classList.add('error');
+    parent.classList.remove('success');
+}
+
+function setSuccess(element) {
+    const parent = element.parentElement;
+    const errorElement = parent.querySelector('.error');
+    errorElement.textContent = '';
+    parent.classList.add('success');
+    parent.classList.remove('error');
+}
+
+function isValidUsername(username) {
+    const regex = /^[A-Za-z0-9_-]{5,15}$/;
+    return regex.test(username);
+}
+
+function isValidEmail(email) {
+    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return re.test(String(email).toLowerCase());
+}
+
+function isValidPassword(password) {
+    const hasUpperCase = /[A-Z]/.test(password);
+    const hasLowerCase = /[a-z]/.test(password);
+    const hasNumbers = /\d/.test(password);
+    return password.length >= 6 && password.length <= 10 && hasUpperCase && hasLowerCase && hasNumbers;
+}
+
+    </script>
+
+</body>
+</html>

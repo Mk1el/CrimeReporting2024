@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Track Crime Reports</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+
+<h1>Your Reported Crimes</h1>
+
+<!-- Check if there are any reports -->
+<% if (reports && reports.length > 0) { %>
+    <ul>
+        <% reports.forEach(report => { %>
+            <li>
+                <h3><%= report.crime_type %></h3>
+                <p>Status: <%= report.status %></p>
+                <p><%= report.crime_description %></p>
+                <p>Location: <%= report.crime_location %></p>
+                <p>Date: <%= report.crime_date %></p>
+            </li>
+        <% }); %>
+    </ul>
+<% } else { %>
+    <p>You have no reported crimes at the moment.</p>
+<% } %>
+
+</body>
+</html>

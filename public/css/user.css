@@ -1,0 +1,64 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: magenta;
+    margin: 0;
+    padding: 0;
+    display: flex;   
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Full viewport height */
+}
+
+.form-container {
+    background-color: white; /* White form background */
+    padding: 40px; /* Padding inside the container */
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); /* Soft shadow */
+    width: 90%; /* Responsive width */
+    max-width: 400px; /* Max width for larger screens */
+}
+
+h1 {
+    text-align: center;
+    color: #333; /* Dark text color */
+    margin-bottom: 20px; /* Space below the heading */
+}
+
+label {
+    display: block; /* Block display for labels */
+    margin-bottom: 5px; /* Space below labels */
+    color: #555; /* Medium gray color */
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+    width: 100%; /* Full width */
+    padding: 10px; /* Padding inside the input */
+    border: 1px solid #ccc; /* Light border */
+    border-radius: 5px; /* Rounded corners */
+    margin-bottom: 15px; /* Space below input fields */
+}
+
+button {
+    background-color: red; /* Red button color */
+    color: white; /* White text color */
+    padding: 15px; /* Increased padding for a bigger button */
+    border: none; /* Remove border */
+    border-radius: 5px; /* Rounded corners */
+    cursor: pointer; /* Pointer cursor on hover */
+    width: 100%; /* Full width */
+    font-size: 16px; /* Larger text */
+    transition: background-color 0.3s; /* Smooth transition for background color */
+}
+
+button:hover {
+    background-color: darkred; /* Darker red on hover */
+}
+
+.error {
+    color: red; /* Red color for error messages */
+    text-align: center; /* Center the error message */
+    margin-bottom: 15px; /* Space below error message */
+}
+

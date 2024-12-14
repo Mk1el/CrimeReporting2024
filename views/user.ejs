@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Dashboard - Crime Reporting</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* General Reset and Global Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f6f9;
+            color: #333;
+        }
+
+        /* Dashboard Container */
+        .dashboard {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar Styles */
+        .sidebar {
+            width: 250px;
+            background-color: #2C3E50;
+            color: white;
+            padding: 20px;
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .sidebar .logo h2 {
+            color: #ECF0F1;
+            font-size: 24px;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .nav-links {
+            list-style: none;
+            padding: 0;
+        }
+
+        .nav-links li {
+            margin: 20px 0;
+        }
+
+        .nav-links a {
+            display: flex;
+            align-items: center;
+            color: white;
+            text-decoration: none;
+            padding: 12px;
+            border-radius: 5px;
+            transition: background 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            background-color: #34495E;
+        }
+
+        .nav-links i {
+            margin-right: 10px;
+        }
+
+        /* Main Content Styles */
+        .content {
+            flex-grow: 1;
+            padding: 40px;
+            background-color: #fff;
+            overflow-y: auto;
+        }
+
+        .content h1 {
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+
+        .notification {
+            background-color: #F39C12;
+            color: white;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .notification i {
+            margin-right: 10px;
+        }
+
+        .notification .close-btn {
+            background: transparent;
+            border: none;
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
+        }
+
+        /* Cards for Actions */
+        .card {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .card-item {
+            background-color: #ECF0F1;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .card-item h3 {
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+
+        .card-item p {
+            font-size: 16px;
+            margin-bottom: 15px;
+        }
+
+        .card-item button {
+            background-color: #3498DB;
+            color: white;
+            border: none;
+            padding: 12px;
+            width: 100%;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .card-item button:hover {
+            background-color: #2980B9;
+        }
+
+        /* Reporting Form Styles */
+        #crime-report-form-container {
+            display: none;
+            margin-top: 30px;
+        }
+
+        #crime-report-form-container h2 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #2C3E50;
+        }
+
+        #crimeReportForm {
+            display: grid;
+            gap: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            font-size: 16px;
+            margin-bottom: 8px;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+        }
+
+        button[type="submit"] {
+            background-color: #3498DB;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #2980B9;
+        }
+
+        /* Hide existing dashboard content when reporting a crime or showing profile */
+        .hide-content {
+            display: none;
+        }
+
+        /* Responsive Design */
+        @media screen and (max-width: 768px) {
+            .sidebar {
+                width: 200px;
+            }
+
+            .content {
+                padding: 20px;
+            }
+
+            .card {
+                grid-template-columns: 1fr;
+            }
+
+            .form-group {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="dashboard">
+        <div class="dashboard">
+            <!-- Sidebar -->
+            <nav class="sidebar">
+                <div class="logo">
+                    <h2>Crime Reporting</h2>
+                </div>
+                <ul class="nav-links">
+                    <li><a href="/user"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                    <li><a href="#" id="report-crime-link"><i class="fas fa-exclamation-circle"></i> Report a Crime</a></li>
+                    <li><a href="#" id="track-reports-link"><i class="fas fa-list-alt"></i> Track Reports</a></li>
+                    <li><a href="#" id="profile-link"><i class="fas fa-user"></i> Profile</a></li>
+                    <li><a href="/logout"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+                </ul>
+            </nav>
+
+            <!-- Main Content -->
+            <div class="content">
+                <h1>Welcome, <%= user.username %></h1>
+
+                <!-- Notification Section -->
+                <div class="notification">
+                    <span><i class="fas fa-info-circle"></i> New updates for your reports!</span>
+                    <button class="close-btn" onclick="closeNotification()">×</button>
+                </div>
+
+                <!-- User Actions Section -->
+                <div class="card" id="user-actions">
+                    <div class="card-item">
+                        <h3>Your Reports</h3>
+                        <p>View the progress of all crimes you've reported.</p>
+                        <button id="track-reports-btn">Track Progress</button>
+                    </div>
+                    <div class="card-item">
+                        <h3>Report a New Crime</h3>
+                        <p>Submit a new crime report for investigation.</p>
+                        <button id="report-crime-button">Report a Crime</button>
+                    </div>
+                    <div class="card-item">
+                        <h3>Update Profile</h3>
+                        <p>Update your personal details and contact information.</p>
+                        <button id="update-profile-btn">Update Profile</button>
+                    </div>
+                </div>
+
+                <!-- Dynamic Content Area for Crime Report Form -->
+                <div id="crime-report-form-container"></div>
+
+                <!-- Profile Details Section (Hidden initially) -->
+                <div id="profile-details" class="hide-content">
+                    <h2>Your Profile</h2>
+                    <p>Name: <%= user.username %></p>
+                    <p>Email: <%= user.email %></p>
+                    <button onclick="closeProfile()">Close Profile</button>
+                    <button id="update-profile-btn" onclick="updateProfile()">Update Profile</button>
+                </div>
+
+                <!-- Reported Crimes Section (Hidden initially) -->
+                <div class="card hide-content" id="reported-crimes">
+                    <h2>Your Reported Crimes</h2>
+                    <div class="card-item">
+                        <h3>Crime Title 1</h3>
+                        <p>Status: Pending</p>
+                        <button onclick="deleteReport(1)">Delete Report</button>
+                    </div>
+                    <div class="card-item">
+                        <h3>Crime Title 2</h3>
+                        <p>Status: Investigating</p>
+                        <button onclick="deleteReport(2)">Delete Report</button>
+                    </div>
+                    <div class="card-item">
+                        <h3>Crime Title 3</h3>
+                        <p>Status: Closed</p>
+                        <button onclick="deleteReport(3)">Delete Report</button>
+                    </div>
+                </div>
+
+                <!-- Track Reports Section (Hidden initially) -->
+                <div class="card hide-content" id="tracked-reports">
+                    <h2>Your Tracked Reports</h2>
+                    <!-- Dynamic report list will appear here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Function to close the notification
+        function closeNotification() {
+            document.querySelector('.notification').style.display = 'none';
+        }
+
+        // Function to delete a report
+        function deleteReport(reportId) {
+            if (confirm("Are you sure you want to delete this report?")) {
+                alert('Report ' + reportId + ' deleted!');
+            }
+        }
+
+        // Function to show the crime report form and hide other content
+        document.getElementById("report-crime-button").addEventListener("click", function() {
+            const crimeReportForm = ` 
+               <h2>Report a Crime</h2>
+<form id="crimeReportForm" action="/submit-crime" method="POST" enctype="multipart/form-data">
+    <div class="form-group">
+        <label for="crimeType">Crime Type:</label>
+        <select id="crimeType" name="crimeType" required>
+            <option value="" disabled selected>Select Crime Type</option>
+            <option value="Theft">Theft</option>
+            <option value="Assault">Assault</option>
+            <option value="Fraud">Fraud</option>
+            <option value="Vandalism">Vandalism</option>
+            <option value="Other">Other</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="crimeLocation">Location of Crime:</label>
+        <input type="text" id="crimeLocation" name="crimeLocation" required placeholder="Enter the location of the crime">
+    </div>
+    <div class="form-group">
+        <label for="crimeDate">Date of Crime:</label>
+        <input type="date" id="crimeDate" name="crimeDate" required>
+    </div>
+    <div class="form-group">
+        <label for="crimeDetails">Crime Details:</label>
+        <textarea id="crimeDetails" name="crimeDetails" rows="4" required placeholder="Provide details about the crime"></textarea>
+    </div>
+    <div class="form-group">
+        <label for="crimeImage">Upload an image (Optional):</label>
+        <input type="file" id="crimeImage" name="crimeImage">
+    </div>
+    <div class="form-group">
+        <label for="contactInfo">Your Contact Info (Optional):</label>
+        <input type="text" id="contactInfo" name="contactInfo" placeholder="Enter your contact information">
+    </div>
+    <button type="submit">Submit Report</button>
+</form>
+            `;
+            document.getElementById("crime-report-form-container").innerHTML = crimeReportForm;
+            document.getElementById("user-actions").classList.add("hide-content");
+            document.getElementById("crime-report-form-container").style.display = "block";
+        });
+
+        // Function to handle showing and hiding the profile details
+        document.getElementById('profile-link').addEventListener('click', function(e) {
+            e.preventDefault();  // Prevent default link behavior
+            
+            const profileDetails = document.getElementById('profile-details');
+            profileDetails.classList.toggle('hide-content');  // Toggle visibility
+        });
+
+        // Function to close profile
+        function closeProfile() {
+            const profileDetails = document.getElementById('profile-details');
+            profileDetails.classList.add('hide-content');  // Hide profile details
+        }
+
+        // Function to update profile (example placeholder)
+        function updateProfile() {
+            alert("Profile update functionality goes here.");
+        }
+        document.getElementById('track-reports-link').addEventListener('click', function(e) {
+            e.preventDefault();  
+
+            // Show loading message
+            document.getElementById('tracked-reports').innerHTML = '<h2>Loading your reports...</h2>';
+
+            // Simulate fetching the reports for the user
+            fetch('/get_user_reports')
+                .then(response => response.json())
+                .then(reports => {
+                    const reportContainer = document.getElementById('tracked-reports');
+                    if (reports.length === 0) {
+                        reportContainer.innerHTML = '<h2>No reports found.</h2>';
+                    } else {
+                        reportContainer.innerHTML = '<h2>Your Reported Crimes</h2>';
+                        reports.forEach(report => {
+                            const reportElement = `
+                                <div class="card-item">
+                                    <h3>${report.crime_type}</h3>
+                                    <p>Status: ${report.status}</p>
+                                    <p>Location: ${report.location}</p>
+                                    <p>Date: ${report.date}</p>
+                                </div>
+                            `;
+                            reportContainer.innerHTML += reportElement;
+                        });
+                    }
+                })
+                .catch(error => {
+                    document.getElementById('tracked-reports').innerHTML = '<h2>Error fetching reports. Please try again later.</h2>';
+                    console.error('Error fetching reports:', error);
+                });
+        });
+    </script>
+</body>
+</html>

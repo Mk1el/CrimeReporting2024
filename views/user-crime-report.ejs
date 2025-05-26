@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crime Report</title>
+    <link rel="stylesheet" href="/css/styles.css"> <!-- Link to your CSS file -->
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="/profile">Profile</a></li>
+                <li><a href="/my-reports">My Reports</a></li>
+                <li><a href="/dashboard">Dashboard</a></li>
+                <li><a href="/logout">Logout</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="crime-report-section">
+            <h1>Report a Crime</h1>
+            <form id="crimeReportForm" action="/submit-crime" method="POST" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="crimeType">Crime Type:</label>
+                    <select id="crimeType" name="crimeType" required>
+                        <option value="" disabled selected>Select Crime Type</option>
+                        <option value="Theft">Theft</option>
+                        <option value="Assault">Assault</option>
+                        <option value="Fraud">Fraud</option>
+                        <option value="Vandalism">Vandalism</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="crimeLocation">Location of Crime:</label>
+                    <input type="text" id="crimeLocation" name="crimeLocation" required placeholder="Enter the location of the crime">
+                </div>
+
+                <div class="form-group">
+                    <label for="crimeDate">Date of Crime:</label>
+                    <input type="date" id="crimeDate" name="crimeDate" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="crimeDescription">Description of Crime:</label>
+                    <textarea id="crimeDescription" name="crimeDescription" rows="4" required placeholder="Provide a detailed description of the crime"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="evidenceFile">Upload Evidence (Optional):</label>
+                    <input type="file" id="evidenceFile" name="evidenceFile" accept="image/*,video/*">
+                </div>
+
+                <div class="form-group">
+                    <label for="contactInfo">Your Contact Info (Optional):</label>
+                    <input type="text" id="contactInfo" name="contactInfo" placeholder="Your name or contact information">
+                </div>
+
+                <button type="submit" class="btn">Submit Report</button>
+            </form>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Crime Reporting System. All rights reserved.</p>
+    </footer>
+    <script>
+        document.getElementById("crimeReportForm").addEventListener("submit", function(event) {
+            event.preventDefault(); // Prevent the form from submitting the traditional way
+    
+            // Show "Pending" immediately
+            document.getElementById("statusMessage").innerHTML = "<p>Pending...</p>";
+    
+            // Create a FormData object to send the form data via AJAX
+            const formData = new FormData(this);
+    
+            // Send the form data to the server using fetch (AJAX)
+            fetch('/submit-crime', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json()) // Assume the server returns a JSON response
+            .then(data => {
+                if (data.success) {
+                    document.getElementById("statusMessage").innerHTML = "<p>Report Submitted Successfully!</p>";
+                } else {
+                    document.getElementById("statusMessage").innerHTML = "<p>Error: Could not submit report. Please try again.</p>";
+                }
+            })
+            .catch(error => {
+                document.getElementById("statusMessage").innerHTML = "<p>Error: An unexpected error occurred.</p>";
+            });
+        });
+    </script>
+    
+</body>
+</html>

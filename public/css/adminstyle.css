@@ -1,0 +1,119 @@
+/* Global Styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f7f6;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: #3b3b3b;
+    color: white;
+    padding: 1rem 0;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    margin: 0;
+    padding: 0;
+}
+
+nav ul li {
+    margin: 0 20px;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 1.1rem;
+}
+
+nav ul li a:hover {
+    text-decoration: underline;
+}
+
+/* Main Section */
+main {
+    margin: 2rem;
+}
+
+.dashboard h1 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+}
+
+.search-filter {
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.search-filter input,
+.search-filter select {
+    padding: 8px;
+    font-size: 1rem;
+}
+
+.search-filter button {
+    padding: 8px 16px;
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.search-filter button:hover {
+    background-color: #45a049;
+}
+
+/* Table Styles */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+table th,
+table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+table th {
+    background-color: #3b3b3b;
+    color: white;
+}
+
+table tbody tr:hover {
+    background-color: #f1f1f1;
+}
+
+button.action-btn {
+    padding: 6px 12px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    border: none;
+    background-color: #2196f3;
+    color: white;
+    margin-right: 10px;
+}
+
+button.action-btn:hover {
+    background-color: #1976d2;
+}
+
+/* Footer Styles */
+footer {
+    background-color: #3b3b3b;
+    color: white;
+    padding: 1rem;
+    text-align: center;
+    margin-top: 2rem;
+}

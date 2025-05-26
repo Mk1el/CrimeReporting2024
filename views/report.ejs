@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crime Reporting System</title>
+    <link rel="stylesheet" href="/public/css/styles.css">
+    <style>
+        /* Reset some default browser styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4; /* Light background */
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            flex-direction: column;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            background: #fff;
+            width: 100%;
+            max-width: 800px;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Soft shadow */
+            margin: auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        header h1 {
+            font-size: 2rem;
+            color: #ff0000; /* Red color for emphasis */
+        }
+
+        header p {
+            font-size: 1.1rem;
+            color: #555;
+            margin-bottom: 1rem;
+        }
+
+        .banner-image {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+        }
+
+        /* Navbar Styling with Icons */
+        nav {
+            background-color: #007bff; /* Blue background for navbar */
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+        }
+
+        nav ul li {
+            margin: 0 20px;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+        }
+
+        nav ul li a i {
+            margin-right: 8px; /* Space between icon and text */
+        }
+
+        nav ul li a:hover {
+            text-decoration: underline;
+        }
+
+        /* Form Styling */
+        #crime-report-form {
+            background: #f9f9f9;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        #crime-report-form h2 {
+            text-align: center;
+            font-size: 1.5rem;
+            color: #333;
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            font-weight: bold;
+            color: #444;
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        input[type="text"],
+        input[type="date"],
+        select,
+        textarea,
+        input[type="file"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 1rem;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+
+        textarea {
+            resize: vertical;
+        }
+
+        button {
+            background-color: #ff0000; /* Red color for emergency */
+            color: white;
+            padding: 12px;
+            font-size: 1.1rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        button:hover {
+            background-color: #cc0000; /* Darker red on hover */
+        }
+
+        /* Responsive Design */
+        @media (max-width: 600px) {
+            header h1 {
+                font-size: 1.5rem;
+            }
+
+            #crime-report-form {
+                padding: 15px;
+            }
+
+            button {
+                padding: 10px;
+            }
+
+            nav ul {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            nav ul li {
+                margin-bottom: 10px;
+            }
+        }
+
+        /* Styling for thank you message */
+        .thank-you-message {
+            background-color: #4CAF50;
+            color: white;
+            padding: 15px;
+            margin-top: 20px;
+            text-align: center;
+            border-radius: 5px;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Crime Reporting System</h1>
+            <p>Your safety is our priority. Report incidents anonymously.</p>
+            <img src="https://example.com/online-crime-banner.jpg" alt="Crime Reporting Banner" class="banner-image">
+        </header>
+
+        <nav>
+            <ul>
+                <li><a href="/login"><i class="fas fa-sign-in-alt"></i> Login</a></li>
+                <li><a href="/"><i class="fas fa-home"></i> Home</a></li>
+                <li><a href="/user/forgot-password"><i class="fas fa-question-circle"></i> Forgot Password</a></li>
+            </ul>
+        </nav>
+
+        <section id="crime-report-form">
+            <h2>Report a Crime</h2>
+            <form id="crime-report-form" action="/report" method="POST" enctype="multipart/form-data" onsubmit="return validateForm()">
+                <label for="crime-type">Type of Crime:</label>
+                <select id="crime-type" name="crime-type" required onchange="toggleOtherCrimeField()">
+                    <option value="theft">Theft</option>
+                    <option value="assault">Assault</option>
+                    <option value="vandalism">Vandalism</option>
+                    <option value="fraud">Fraud</option>
+                    <option value="other">Other</option>
+                </select>
+
+                <!-- Additional crime description input for 'Other' crime type -->
+                <div id="other-crime-container" style="display: none;">
+                    <label for="other-crime-description">Please describe the crime:</label>
+                    <textarea id="other-crime-description" name="other-crime-description" placeholder="Describe the other crime type..." rows="4"></textarea>
+                </div>
+
+                <label for="description">Description:</label>
+                <textarea id="description" name="description" required placeholder="Describe the incident..." rows="4"></textarea>
+
+                <label for="location">Location (City, State):</label>
+                <input type="text" id="location" name="location" required>
+
+                <label for="date">Date of Incident:</label>
+                <input type="date" id="date" name="date" required>
+
+                <label for="crime_image">Upload Image of Crime Scene:</label>
+                <input type="file" id="crime-image" name="crime-image" accept="image/jpeg, image/png, image/jpg" required>
+                <small>Accepted formats: JPG, PNG, JPEG. Max file size: 5MB.</small>
+
+                <button type="submit">Submit Report</button>
+            </form>
+        </section>
+        <div id="thank-you-container"></div> <!-- This is where the thank-you message will appear -->
+    </div>
+    <script>
+        // Toggle the visibility of the 'Other' crime description field
+        function toggleOtherCrimeField() {
+            const crimeType = document.getElementById('crime-type').value;
+            const otherCrimeContainer = document.getElementById('other-crime-container');
+    
+            // Show the 'Other' crime description field if the user selects 'Other'
+            if (crimeType === 'other') {
+                otherCrimeContainer.style.display = 'block';
+            } else {
+                otherCrimeContainer.style.display = 'none';
+            }
+        }
+    
+        function validateForm() {
+            const crimeType = document.getElementById('crime-type').value;
+            const description = document.getElementById('description').value;
+            const location = document.getElementById('location').value;
+            const date = document.getElementById('date').value;
+            const crimeImage = document.getElementById('crime-image').files[0];
+            const otherCrimeDescription = document.getElementById('other-crime-description').value;
+    
+            // Validate crime type
+            if (!crimeType) {
+                alert('Please select a type of crime.');
+                return false;
+            }
+    
+            // Validate description for 'Other' crime type if 'Other' is selected
+            if (crimeType === 'other' && !otherCrimeDescription) {
+                alert('Please describe the other type of crime.');
+                return false;
+            }
+    
+            // Validate description for general crime report
+            if (description.length < 10) {
+                alert('Description must be at least 10 characters long.');
+                return false;
+            }
+    
+            // Validate location
+            if (location.trim() === '') {
+                alert('Please enter the location.');
+                return false;
+            }
+    
+            // Validate date (ensure it's not in the future)
+            const currentDate = new Date();
+            const incidentDate = new Date(date);
+            if (incidentDate > currentDate) {
+                alert('The incident date cannot be in the future.');
+                return false;
+            }
+    
+            // Validate file size and type for crime image
+            if (crimeImage) {
+                if (crimeImage.size > 5 * 1024 * 1024) { // 5MB
+                    alert('File size exceeds 5MB.');
+                    return false;
+                }
+                const fileType = crimeImage.type;
+                if (fileType !== 'image/jpeg' && fileType !== 'image/png' && fileType !== 'image/jpg') {
+                    alert('Only JPG, JPEG, or PNG images are allowed.');
+                    return false;
+                }
+            }
+    
+            // Simulate form submission (in real implementation, it would be an actual POST request)
+            setTimeout(() => {
+                // Clear the form
+                const form = document.getElementById("crime-report-form");
+                form.reset();
+    
+                // Show the thank you message
+                const messageContainer = document.createElement("div");
+                messageContainer.classList.add("thank-you-message");
+                messageContainer.innerHTML = `
+                    <h3>Thank you for submitting your report!</h3>
+                    <p>We appreciate your contribution in making the community safer.</p>
+                `;
+                document.getElementById('thank-you-container').appendChild(messageContainer);
+    
+                // Optional: Auto-remove the thank you message after a few seconds
+                setTimeout(() => {
+                    messageContainer.remove();
+                }, 5000);
+    
+            }, 1000); // Simulate a delay to show the thank you message after form submission
+        }
+    </script>
+</body>
+</html>

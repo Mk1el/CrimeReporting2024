@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crime Reporting Form</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+    <div class="container">
+        <h2>Crime Reporting Form</h2>
+        <form id="crimeReportForm" action="/submit-report" method="POST" onsubmit="return validateForm()">
+            
+            <!-- Contact Information -->
+            <fieldset>
+                <legend>Contact Information (Optional)</legend>
+                <label for="name">Full Name:</label>
+                <input type="text" id="name" name="name">
+                
+                <label for="phone">Phone Number:</label>
+                <input type="text" id="phone" name="phone">
+                
+                <label for="email">Email Address:</label>
+                <input type="email" id="email" name="email">
+            </fieldset>
+
+            <!-- Incident Information -->
+            <fieldset>
+                <legend>Incident Information</legend>
+                <label for="date">Date of Crime:</label>
+                <input type="date" id="date" name="date">
+                
+                <label for="time">Time of Crime:</label>
+                <input type="time" id="time" name="time">
+
+                <label for="location">Location of Crime:</label>
+                <input type="text" id="location" name="location" placeholder="Enter the full address">
+
+                <label for="crimeType">Type of Crime:</label>
+                <select id="crimeType" name="crimeType">
+                    <option value="">--Select Crime Type--</option>
+                    <option value="theft">Theft</option>
+                    <option value="assault">Assault</option>
+                    <option value="vandalism">Vandalism</option>
+                    <option value="fraud">Fraud</option>
+                    <option value="drug-related">Drug-related Offense</option>
+                    <option value="other">Other</option>
+                </select>
+
+                <label for="crimeDetails">Details of the Crime:</label>
+                <textarea id="crimeDetails" name="crimeDetails" rows="4" placeholder="Describe the incident"></textarea>
+            </fieldset>
+
+            <!-- Suspect Information -->
+            <fieldset>
+                <legend>Suspect Information</legend>
+                <label for="suspectName">Suspect's Name (if known):</label>
+                <input type="text" id="suspectName" name="suspectName">
+                
+                <label for="suspectDesc">Suspect's Description:</label>
+                <textarea id="suspectDesc" name="suspectDesc" rows="3" placeholder="Describe the suspect's appearance"></textarea>
+            </fieldset>
+
+            <!-- Submit Button -->
+            <button type="submit">Submit Report</button>
+        </form>
+    </div>
+
+    <script src="/scripts.js"></script>
+</body>
+</html>
